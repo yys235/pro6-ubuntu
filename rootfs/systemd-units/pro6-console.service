@@ -1,0 +1,30 @@
+# Replace the Phosh/phoc session with Weston kiosk-shell running the
+# PRO6 ops console. Weston takes DRM card0 like phoc did; touch works
+# through libinput the same way.
+[Unit]
+Description=PRO6 ops console (Weston kiosk)
+Conflicts=getty@tty7.service phosh.service pro6-desktop.service
+After=getty@tty7.service systemd-user-sessions.service dbus.socket pro6-display-refresh.service pro6-wifi.service
+Wants=pro6-display-refresh.service
+
+[Service]
+Type=simple
+User=qqqqqq
+PAMName=login
+TTYPath=/dev/tty7
+TTYReset=yes
+TTYVHangup=yes
+TTYVTDisallocate=yes
+StandardInput=tty-fail
+StandardOutput=journal
+StandardError=journal
+Environment=WLR_RENDERER=pixman
+Environment=LIBGL_ALWAYS_SOFTWARE=1
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+ExecStart=/usr/local/lib/pro6/pro6-console-run
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=graphical.target

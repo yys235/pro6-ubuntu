@@ -1,0 +1,39 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment@0 {
+		target-path = "/i2c@11010000";
+		__overlay__ { status = "okay"; };
+	};
+	fragment@1 {
+		target-path = "/pwrap@1000d000/pmic/regulators";
+		__overlay__ {
+			buck-vgpu {
+				phandle = <0x100>;
+				regulator-always-on;
+				regulator-boot-on;
+			};
+		};
+	};
+
+	fragment@2 {
+		target-path = "/";
+		__overlay__ {
+			#address-cells = <2>;
+			#size-cells = <2>;
+
+			mali@13040000 {
+				compatible = "arm,mali-t860";
+				reg = <0x0 0x13040000 0x0 0x4000>;
+				interrupts = <0 0x108 8>, <0 0x107 8>,
+					     <0 0x106 8>;
+				interrupt-names = "job", "mmu", "gpu";
+				clocks = <4 10>, <4 83>;
+				clock-names = "core", "bus";
+				mali-supply = <0x100>;
+				status = "okay";
+			};
+		};
+	};
+};

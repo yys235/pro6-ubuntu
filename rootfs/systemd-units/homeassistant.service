@@ -1,0 +1,16 @@
+[Unit]
+Description=Home Assistant (docker container)
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+ExecStartPre=-/usr/bin/docker rm -f homeassistant
+ExecStart=/usr/bin/docker run --rm --name homeassistant --network host --privileged -v /opt/homeassistant:/config -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Shanghai ghcr.io/home-assistant/home-assistant:stable
+ExecStop=/usr/bin/docker stop homeassistant
+
+[Install]
+WantedBy=multi-user.target

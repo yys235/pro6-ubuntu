@@ -1,0 +1,7 @@
+/dts-v1/; /plugin/;
+/ {
+	fragment@0 {
+		target-path = "/i2c@11010000";
+		__overlay__ { status = "okay"; };
+	};
+};

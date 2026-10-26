@@ -1,0 +1,8 @@
+[Unit]
+Description=Refresh LibreTV VOD source list (self-healing)
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/libretv-sources refresh

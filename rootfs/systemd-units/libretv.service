@@ -1,0 +1,16 @@
+[Unit]
+Description=LibreTV (docker container)
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+ExecStartPre=-/usr/bin/docker rm -f libretv
+ExecStart=/usr/bin/docker run --rm --name libretv --network host -e PASSWORD=pro6tv ghcr.io/librespark/libretv:latest
+ExecStop=/usr/bin/docker stop libretv
+
+[Install]
+WantedBy=multi-user.target

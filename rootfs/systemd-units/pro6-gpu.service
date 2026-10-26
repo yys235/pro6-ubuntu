@@ -1,0 +1,14 @@
+[Unit]
+Description=PRO6 Mali GPU bring-up (overlay, vgpu regulator, panfrost)
+After=systemd-udev-trigger.service systemd-modules-load.service
+Before=multi-user.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/insmod /lib/modules/6.18.57/extra/pro6_gpu.ko
+ExecStart=/bin/sh -c '/usr/sbin/modprobe mt6351_radio 2>/dev/null || /usr/sbin/insmod /lib/modules/6.18.57/extra/mt6351-radio.ko'
+ExecStart=/usr/sbin/modprobe panfrost
+
+[Install]
+WantedBy=multi-user.target

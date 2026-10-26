@@ -1,0 +1,13 @@
+[Unit]
+Description=MT6797 Wi-Fi (WMT chain + patch service + WLAN power on)
+After=pro6-radio-base.service
+Wants=pro6-radio-base.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/pro6-wifi-up
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

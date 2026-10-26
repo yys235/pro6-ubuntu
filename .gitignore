@@ -1,0 +1,26 @@
+# 构建产物与原厂镜像不入库
+*.img
+*.ko
+*.o
+*.mod.c
+Image
+Image.gz
+*.dtb
+*.tar.xz
+*.tar.gz
+evidence/*.img
+evidence/*.bin
+
+# 原厂固件与备份（版权与隐私）
+*.zip
+device-backup/
+flyme*
+
+# 签名私钥例外：keys/ 里是 AOSP 公开测试密钥（公开材料），保留
+!keys/public-aosp-verity.pk8
+!keys/public-aosp-verity.x509.pem
+
+# python
+__pycache__/
+*.pyc
+.venv/

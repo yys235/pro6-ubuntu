@@ -1,0 +1,14 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	fragment {
+		target-path = "/pwrap@1000d000/pmic/keys";
+		__overlay__ {
+			homekey {
+				linux,keycodes = <172>;	/* KEY_HOME */
+				wakeup-source;
+			};
+		};
+	};
+};
